@@ -10,7 +10,7 @@ const API_URL = import.meta.env.VITE_API_URL;
  * @param {string} userData.senha - Senha do usuário.
  * @returns {Promise<Object>} Dados de resposta da API (ex: confirmação ou dados do usuário criado).
  */
-export async function criar_conta({ nome, email, senha }) {
+export async function criarConta({ nome, email, senha }) {
     try {
         const response = await fetch(`${API_URL}/auth/criar_conta`, {
             method: 'POST',
@@ -54,12 +54,115 @@ export async function login({ email, senha }) {
         if (!response.ok) {
             throw new Error(data.detail || 'Erro ao fazer login');
         }
-        sessionStorage.setItem('access_token', data.access_token);
-        sessionStorage.setItem('refresh_token', data.refresh_token);
-        sessionStorage.setItem('token_type', data.token_type);
+        localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('refresh_token', data.refresh_token);
+        localStorage.setItem('token_type', data.token_type);
         return data;
     } catch (error) {
         console.error('Erro ao fazer login:', error);
         throw error;
     }
 };
+
+
+/**
+ * Realiza a verificação de status de um token na API.
+ * 
+ * @param {string} token - Token de refresh.
+ * @returns {Promise<Object>} Dados de resposta da API (ex: confirmação do novo token).
+ */
+export async function confereStatusToken(token) {
+    try {
+        const response = await fetch(`${API_URL}/auth/verificar_token`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.detail || 'Erro ao verificar token');
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Erro ao verificar token:', error);
+        throw error;
+    }
+}
+
+
+/**
+ * Realiza o refresh de um token na API caso o refresh token seja válido ainda.
+ * 
+ * @returns {Promise<Object>} Dados de resposta da API (ex: confirmação do novo token).
+ */
+export async function refreshToken() {
+    try {
+        const refreshToken = localStorage.getItem('refresh_token');
+        if (!refreshToken) {
+            throw new Error('Refresh token não encontrado');
+        }
+
+        const response = await fetch(`${API_URL}/auth/refresh`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${refreshToken}`,
+            },
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.detail || 'Erro ao atualizar token');
+        }
+
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_type');
+        localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('token_type', data.token_type);
+        return data;
+    } catch (error) {
+        console.error('Erro ao atualizar token:', error);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_type');
+        localStorage.removeItem('refresh_token');
+        throw error;
+    }
+}
+
+
+/**
+ * Realiza o refresh de um token na API caso o refresh token seja válido ainda.
+ */
+export async function verificarSessaoCompleta() {
+    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
+
+    if (!accessToken && !refreshToken) {
+        return false;
+    }
+
+
+    if (accessToken) {
+        try {
+            const statusAcessToken = await confereStatusToken(accessToken);
+            return statusAcessToken.valido;
+        } catch (error) {
+            console.error('Erro ao verificar status do access token:', error);
+        }
+    }
+
+    if (refreshToken) {
+        try {
+            await refreshToken();
+            return true;
+        } catch (error) {
+            console.error('Erro ao atualizar token:', error);
+        }
+    }
+
+    return false;
+}
