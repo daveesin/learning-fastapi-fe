@@ -139,26 +139,26 @@ export async function refreshToken() {
  */
 export async function verificarSessaoCompleta() {
     const accessToken = localStorage.getItem('access_token');
-    const refreshToken = localStorage.getItem('refresh_token');
+    const refreshTokenVar = localStorage.getItem('refresh_token');
 
-    if (!accessToken && !refreshToken) {
+    if (!accessToken && !refreshTokenVar) {
         return false;
     }
 
-
     if (accessToken) {
         try {
-            const statusAcessToken = await confereStatusToken(accessToken);
-            return statusAcessToken.valido;
+            // Se confereStatusToken passou sem dar throw, o token é válido!
+            await confereStatusToken(accessToken);
+            return true; 
         } catch (error) {
-            console.error('Erro ao verificar status do access token:', error);
+            console.warn('Access token expirado. Tentando refresh...', error);
         }
     }
 
-    if (refreshToken) {
+    if (refreshTokenVar) {
         try {
             await refreshToken();
-            return true;
+            return true; 
         } catch (error) {
             console.error('Erro ao atualizar token:', error);
         }
