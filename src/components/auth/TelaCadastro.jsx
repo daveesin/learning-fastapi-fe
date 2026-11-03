@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { criar_conta } from '../../services/auth-services';
+import { criarConta } from '../../services/auth-services';
 
 
 function Register() {
@@ -25,7 +25,7 @@ function Register() {
         setLoading(true);
 
         try {
-            await criar_conta({ nome, email, senha });
+            await criarConta({ nome, email, senha });
         } catch (error) {
             console.error('Erro ao criar conta:', error);
         } finally {
