@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@theme {
+    --color-pizzaria-bg: #FFF3E0;          /* Creme Apetite (Fundo claro) */
+    --color-pizzaria-card: #FFFFFF;        /* Fundo dos cards */
+    --color-pizzaria-border: #8D6E63;      /* Marrom Caramelo (Bordas) */
+    --color-pizzaria-text: #2C1D11;        /* Marrom Rústico (Textos) */
+    --color-pizzaria-muted: #6B7280;       /* Texto secundário */
+    --color-pizzaria-accent: #FF6D00;      /* Laranja Fogo (Botões e CTAs) */
+    --color-pizzaria-accent-dark: #B45309; /* Laranja escuro para hover */
+    --color-pizzaria-danger: #D32F2F;      /* Vermelho Tomate (Alertas/Selos) */
+}
