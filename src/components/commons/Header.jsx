@@ -10,7 +10,15 @@ function Header() {
                     <span className="text-pizzaria-accent">Pizzaria</span> <span className="text-pizzaria-text">App</span>
                 </div>
             </Link>
-
+            
+            {/* Lista de navegação */}
+            <nav className="nav">
+                <ul className="flex space-x-4">
+                    <li><Link to="/" className="font-semibold hover:text-pizzaria-accent">Home</Link></li>
+                    <li><Link to="/menu" className="font-semibold hover:text-pizzaria-accent">Menu</Link></li>
+                    <li><Link to="/about" className="font-semibold hover:text-pizzaria-accent">About</Link></li>
+                </ul>
+            </nav>
 
         </header>
     )
