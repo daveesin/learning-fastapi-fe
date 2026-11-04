@@ -28,7 +28,7 @@ function AuthRedirect() {
     }
 
 
-    return statusLogin ? <Menu /> : <Home />;
+    return statusLogin ? <Menu nomeUsuario={statusLogin.nome}/> : <Home />;
 
 }
 
