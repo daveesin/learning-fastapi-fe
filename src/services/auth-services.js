@@ -148,8 +148,8 @@ export async function verificarSessaoCompleta() {
     if (accessToken) {
         try {
             // Se confereStatusToken passou sem dar throw, o token é válido!
-            await confereStatusToken(accessToken);
-            return true; 
+            const userData = await confereStatusToken(accessToken);
+            return userData.usuario || true; 
         } catch (error) {
             console.warn('Access token expirado. Tentando refresh...', error);
         }
@@ -158,7 +158,9 @@ export async function verificarSessaoCompleta() {
     if (refreshTokenVar) {
         try {
             await refreshToken();
-            return true; 
+            const newAccessToken = localStorage.getItem('access_token');
+            const userData = await confereStatusToken(newAccessToken);
+            return userData.usuario || true; 
         } catch (error) {
             console.error('Erro ao atualizar token:', error);
         }
