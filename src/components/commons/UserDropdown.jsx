@@ -34,7 +34,7 @@ function UserDropdown({ nomeUsuario }) {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center space-x-2 focus:outline-none bg-pizzaria-accent/10 p-2 rounded-full hover:bg-pizzaria-accent/20 transition"
             >
-                <img src={userIcon} alt="User Profile" className="w-8 h-8 rounded-full" />
+                <img src={userIcon} alt="User Profile" className="w-8 h-8 rounded-full hover:cursor-pointer" />
                 {nomeUsuario && (
                     <span className="text-sm font-semibold text-pizzaria-text hidden md:inline">
                         {nomeUsuario}
