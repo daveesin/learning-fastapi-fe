@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import userIcon from '../../assets/circle-user.svg';
+import UserDropdown from "./UserDropdown";
 
-function Header() {
+function Header({ usuarioLogado, nomeUsuario }) {
+
+    const token = localStorage.getItem('access_token');
 
     return(
         <header className="header bg-pizzaria-border text-pizzaria-text p-4 flex justify-between items-center h-24 px-10 py-8 shadow">
@@ -22,11 +25,15 @@ function Header() {
                 </ul>
             </nav>
 
-            {/* Botão de login */}
-            <Link to="/login" className="bg-pizzaria-accent flex justify-between text-white py-2 px-4 rounded hover:bg-pizzaria-accent-dark">
-                <img src={userIcon} alt="Login Icon" className="w-5 h-5 mr-2" />
-                <span>Login</span>
-            </Link>
+            {/* Botão de login ou menu do usuário */}
+            {token ? (
+                <UserDropdown nomeUsuario={nomeUsuario} />
+            ) : (
+                <Link to="/login" className="bg-pizzaria-accent flex justify-between text-white py-2 px-4 rounded hover:bg-pizzaria-accent-dark">
+                    <img src={userIcon} alt="Login Icon" className="w-5 h-5 mr-2" />
+                    <span>Login</span>
+                </Link>
+            )}
 
         </header>
     )
