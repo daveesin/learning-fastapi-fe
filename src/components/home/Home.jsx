@@ -41,7 +41,7 @@ function Home() {
 
                 {/* Ilustração / Destaque Visual */}
                 <div className="flex justify-center">
-                    <div className="relative w-72 h-72 md:w-96 md:h-96 bg-gradient-to-tr from-pizzaria-accent/25 to-pizzaria-border/40 rounded-full flex items-center justify-center shadow-2xl border border-white">
+                    <div className="relative w-72 h-72 md:w-96 md:h-96 bg-linear-to-tr from-pizzaria-accent/25 to-pizzaria-border/40 rounded-full flex items-center justify-center shadow-2xl border border-white">
                         <span className="text-8xl md:text-9xl animate-pulse">🍕</span>
                         <div className="absolute -bottom-4 bg-white px-6 py-3 rounded-2xl shadow-lg border border-pizzaria-border/20 flex items-center gap-3">
                             <span className="text-2xl">⭐</span>
