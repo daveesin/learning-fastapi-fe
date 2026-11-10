@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import userIcon from '../../assets/circle-user.svg';
 import UserDropdown from "./UserDropdown";
 
-function Header({ usuarioLogado, nomeUsuario }) {
+function Header({ nomeUsuario }) {
 
     const token = localStorage.getItem('access_token');
 
