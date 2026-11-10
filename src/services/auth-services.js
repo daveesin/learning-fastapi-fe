@@ -168,3 +168,13 @@ export async function verificarSessaoCompleta() {
 
     return false;
 }
+
+
+/**
+ * Realiza o logout do usuário, removendo os tokens do localStorage impedindo a validação de algum usuário
+ */
+export function logout() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('token_type');
+}
