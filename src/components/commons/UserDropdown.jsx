@@ -67,7 +67,7 @@ function UserDropdown({ nomeUsuario }) {
 
                     <button
                         onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-semibold border-t border-gray-100"
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:cursor-pointer hover:bg-red-50 font-semibold border-t border-gray-100"
                     >
                         Sair (Logout)
                     </button>
